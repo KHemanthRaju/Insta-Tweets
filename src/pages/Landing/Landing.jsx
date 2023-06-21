@@ -1,17 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import header from "../../assets/header.svg";
-import "./landing.css";
+import "../Landing/Landing.css";
 
 export const Landing = () => {
-  document.title = "tech-social";
+  document.title = "Insta-Tweets";
   const navigate = useNavigate();
   return (
     <div className="landing-main">
-      <img src={header} alt="header" className="header-image" />
+      {/* <img src={header} alt="header" className="header-image" /> */}
       <div className="lending-right">
         <div className="landing-logo">
-          <p>Tech-Social</p>
+          <p>Insta Tweets</p>
         </div>
         <div className="landing-content">
           <p>
