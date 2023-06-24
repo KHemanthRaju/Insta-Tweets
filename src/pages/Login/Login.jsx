@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import "../Login/Login.css";
 
 export const Login = () => {
   document.title = "Insta-Tweets | Login";
@@ -14,8 +15,8 @@ export const Login = () => {
   const [userData, setUserData] = useState({ username: "", password: "" });
 
   const guestUserData = {
-    username: "hemanthraju",
-    password: "hemanth@123",
+    username: "hemanthRaju",
+    password: "khr@123",
   };
 
   const loginHandler = (e) => {
