@@ -15,7 +15,7 @@ export const users = [
     bio: "Aspiring Frontend Developer",
     website: "https://sudiptachakraborty.netlify.app/",
     profileAvatar:
-      "https://res.cloudinary.com/dqlasoiaw/image/upload/v1686685042/tech-social/IMG_20230117_131338_xs5yms.jpg",
+      "https://res.cloudinary.com/dfp7zvyfo/image/upload/v1687605250/K_Hemanth_Raju_1_xghrc5.jpg",
     createdAt: "2022-08-31T10:15:12+05:30",
     updatedAt: formatDate(),
     bookmarks: [],
