@@ -9,6 +9,7 @@ import {
   dislikePostHandler,
   likePostHandler,
 } from "../../backend/controllers/PostController";
+import PostModal from "../PostModal/PostModal";
 
 export const PostCard = ({ post }) => {
   const { _id, content, mediaURL, likes, comments, username, createdAt } = post;
@@ -167,6 +168,11 @@ export const PostCard = ({ post }) => {
           ></i>
         </div>
       </div>
+      {showCommentSection && <Comment post={post} />}
+
+      {showEditModal && (
+        <PostModal post={post} setShowEditModal={setShowEditModal} />
+      )}
     </div>
   );
 };
