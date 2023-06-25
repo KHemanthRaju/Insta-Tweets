@@ -1,7 +1,7 @@
 import React from "react";
-import CommentItem from "../CommentItem/commentItem";
 // import { AuthContext } from "../../contexts/authContext";
 import "../Comment/Comment.css";
+import CommentItem from "../CommentItem/CommentItem";
 
 const Comment = ({ post }) => {
   return (
