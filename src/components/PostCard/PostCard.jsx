@@ -10,6 +10,7 @@ import {
   likePostHandler,
 } from "../../backend/controllers/PostController";
 import PostModal from "../PostModal/PostModal";
+import Comment from "../Comment/Comment";
 
 export const PostCard = ({ post }) => {
   const { _id, content, mediaURL, likes, comments, username, createdAt } = post;
