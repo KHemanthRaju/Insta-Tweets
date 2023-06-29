@@ -7,6 +7,7 @@ import { Signup } from "./pages/Signup/Signup";
 import { ToastContainer } from "react-toastify";
 import { Home } from "./pages/Home/Home";
 import { RequireAuth } from "./components/Auth/RequireAuth";
+import Explore from "./pages/Explore/Explore";
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
         </Route>
+        <Route path="/explore" element={<Explore />} />
       </Routes>
       <ToastContainer
         position="bottom-right"

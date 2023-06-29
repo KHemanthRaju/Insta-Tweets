@@ -15,7 +15,7 @@ export const DataProvider = ({ children }) => {
     posts: [],
     postsLoading: false,
     bookmarks: [],
-    userPos: [],
+    userPost: [],
   };
   const [dataState, dataDispatch] = useReducer(dataReducer, initialState);
   const getAllUsers = async () => {

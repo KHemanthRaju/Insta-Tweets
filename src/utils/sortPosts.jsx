@@ -5,6 +5,7 @@ export const sortOptions = {
 };
 
 export const getSortedPosts = (posts, sortBy) => {
+  console.log(posts);
   switch (sortBy.toUpperCase()) {
     case "LATEST":
       return [...posts].sort(

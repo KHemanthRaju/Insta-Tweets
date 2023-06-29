@@ -25,10 +25,14 @@ export const Home = () => {
         ({ username }) => username === post.username
       ) || authState?.user?.username === post.username
   );
+  console.log(dataState.posts);
+  console.log(postsOfFollowed);
+  console.log(loggedInUser);
 
   const [sortByOption, setSortByOption] = useState("Latest");
 
   const sortedPosts = getSortedPosts(postsOfFollowed, sortByOption);
+  console.log(sortedPosts);
 
   return (
     <div className="home">
