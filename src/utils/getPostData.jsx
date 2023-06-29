@@ -2,7 +2,7 @@ export const getPostDate = (postDate) => {
   const datePosted = new Date(postDate);
   const timeNow = new Date();
   const millisec = Math.floor(timeNow - datePosted);
-  const sec = Math.flooe(millisec / 1000);
+  const sec = Math.floor(millisec / 1000);
 
   if (sec > 59) {
     const min = Math.floor(sec / 60);

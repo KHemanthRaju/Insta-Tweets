@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./explore.css";
+import "../Explore/Explore.css";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { LeftSideBar } from "../../components/LeftSideBar/LeftSideBar";
 import { RightSideBar } from "../../components/RightSideBar/RightSideBar";
@@ -44,7 +44,7 @@ const Explore = () => {
             </div>
           )}
         </div>
-        <RightSideBar />
+        {/* <RightSideBar /> */}
       </div>
     </div>
   );
