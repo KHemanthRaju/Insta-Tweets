@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "../Explore/Explore.css";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { LeftSideBar } from "../../components/LeftSideBar/LeftSideBar";
-import { RightSideBar } from "../../components/RightSideBar/RightSideBar";
 import { useData } from "../../contexts/dataContext";
 import { PostCard } from "../../components/PostCard/PostCard";
 import { sortOptions, getSortedPosts } from "../../utils/sortPosts";
 import ClipLoader from "react-spinners/ClipLoader";
+import RightSideBar from "../../components/RightSideBar/RightSideBar";
 
 const Explore = () => {
   document.title = "tech-social | Explore";
@@ -44,7 +44,7 @@ const Explore = () => {
             </div>
           )}
         </div>
-        {/* <RightSideBar /> */}
+        <RightSideBar />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import "../SuggestedUser/SuggestedUser.css";
+import "../SuggestedUser/Suggesteduser.css";
 import { useNavigate } from "react-router-dom";
 import { followUserHandler } from "../../utils/followUserHandler";
 import { unfollowUserHandler } from "../../utils/unfollowUserHandler";
