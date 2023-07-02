@@ -1,0 +1,39 @@
+import React from "react";
+import "../Bookmarks/Bookmarks.css";
+import { useData } from "../../contexts/dataContext";
+import { Navbar } from "../../components/Navbar/Navbar";
+import { LeftSideBar } from "../../components/LeftSideBar/LeftSideBar";
+import { PostCard } from "../../components/PostCard/PostCard";
+import RightSideBar from "../../components/RightSideBar/RightSideBar";
+
+const Bookmarks = () => {
+  document.title = "tech-social | Bookmarks";
+
+  const { dataState, darkMode } = useData();
+
+  const getBookmarkPosts = (postId) =>
+    dataState?.posts?.filter((post) => post._id === postId)[0];
+
+  return (
+    <div className={`bookmarks ${darkMode && "bgDarkmode"}`}>
+      <Navbar />
+      <div className="bookmarks-content">
+        <LeftSideBar />
+        <div className="bookmarks-main">
+          {dataState?.bookmarks?.length === 0 ? (
+            <h3>No Bookmarks Yet</h3>
+          ) : (
+            dataState?.bookmarks.map((post) => (
+              <PostCard key={post._id} post={getBookmarkPosts(post)} />
+            ))
+          )}
+        </div>
+        <div className="rightSideBar">
+          <RightSideBar />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Bookmarks;

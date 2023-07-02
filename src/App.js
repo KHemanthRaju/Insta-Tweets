@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { Home } from "./pages/Home/Home";
 import { RequireAuth } from "./components/Auth/RequireAuth";
 import Explore from "./pages/Explore/Explore";
+import Profile from "./pages/Profile/Profile";
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
+          {/* <Route path="/bookmarks" element={<Bookmarks />} /> */}
+          {/* <Route path="liked-posts" element={<LikedPosts />} /> */}
+          <Route path="/profile/:username" element={<Profile />} />
         </Route>
         <Route path="/explore" element={<Explore />} />
       </Routes>
