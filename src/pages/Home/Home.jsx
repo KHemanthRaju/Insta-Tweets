@@ -5,9 +5,9 @@ import { useAuth } from "../../contexts/authContext";
 import { useData } from "../../contexts/dataContext";
 import "../Home/Home.css";
 import { getSortedPosts, sortOptions } from "../../utils/sortPosts";
-import { PostForm } from "../../components/PostForm/PostForm";
 import { ClipLoader } from "react-spinners";
 import { PostCard } from "../../components/PostCard/PostCard";
+import PostForm from "../../components/PostForm/PostForm";
 
 export const Home = () => {
   document.title = "Insta-Tweets | Home";

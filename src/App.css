@@ -1,38 +1,38 @@
-.App {
-  text-align: center;
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --primary-color: #42a5f5;
+  --primary-dark: #1976d2;
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --grey-color: #9ca3af;
+  --lightgrey-color: #e5e7eb;
+  --red-color: red;
+  --offwhite-color: #faf9f9;
+  --primary-darkmode: #0b2239;
+  --secondary-darkmode: #020a12;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.bgDarkmode {
+  background-color: var(--primary-darkmode) !important;
+  color: var(--white-color) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.bgSecondaryDarkMode {
+  background-color: var(--secondary-darkmode) !important;
+  color: var(--white-color) !important;
+  border-radius: 5px !important;
 }
 
-.App-link {
-  color: #61dafb;
+.darkModeColor {
+  color: var(--white-color) !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.darkModeBorder {
+  border-color: var(--primary-darkmode) !important;
 }
