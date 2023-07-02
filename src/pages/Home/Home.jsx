@@ -19,6 +19,7 @@ export const Home = () => {
   const loggedInUser = dataState?.users?.find(
     ({ username }) => username === authState?.user?.username
   );
+  console.log("Logggedin User", loggedInUser.following);
 
   const postsOfFollowed = dataState?.posts?.filter(
     (post) =>
@@ -42,6 +43,8 @@ export const Home = () => {
         <LeftSideBar />
         <div className={`home-main ${darkMode && "bgDarkmode"}`}>
           <PostForm />
+          {console.log(postsOfFollowed)}
+          {console.log("Posts Loading", dataState.postsLoading)}
           {dataState?.postsLoading ? (
             <ClipLoader color="var(--primary-dark)" size={60} />
           ) : postsOfFollowed?.length === 0 ? (

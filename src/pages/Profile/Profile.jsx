@@ -44,7 +44,7 @@ const Profile = () => {
       const { data, status } = await axios.get(`/api/users/${username}`);
       console.log("User data", data);
       console.log("User status", status);
-      if (status === 201) {
+      if (status === 200) {
         setProfileData(data?.user);
         setUsersLoading(false);
       }
