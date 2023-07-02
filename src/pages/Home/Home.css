@@ -1,0 +1,39 @@
+.home {
+  min-height: 100vh;
+}
+
+.home-content {
+  display: flex;
+}
+
+.home-main {
+  width: 58%;
+  padding: 10px 0;
+  position: relative;
+  left: 15%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+select {
+  border: 2px solid var(--primary-dark);
+}
+
+@media (max-width: 600px) {
+  .home-content .rightSideBar {
+    display: none;
+  }
+
+  .home-main {
+    width: 100%;
+    left: 0%;
+    padding-bottom: 60px;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 601px) {
+  .home-main {
+    width: 52%;
+  }
+}

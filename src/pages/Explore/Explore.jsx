@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../Explore/Explore.css";
-import { Navbar } from "../../components/Navbar/Navbar";
-import { LeftSideBar } from "../../components/LeftSideBar/LeftSideBar";
-import { useData } from "../../contexts/dataContext";
-import { PostCard } from "../../components/PostCard/PostCard";
 import { sortOptions, getSortedPosts } from "../../utils/sortPosts";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useData } from "../../contexts/dataContext";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
+import { PostCard } from "../../components/PostCard/PostCard";
+import { LeftSideBar } from "../../components/LeftSideBar/LeftSideBar";
+import { Navbar } from "../../components/Navbar/Navbar";
 
 const Explore = () => {
   document.title = "tech-social | Explore";
-  const { dataState } = useData();
+  const { dataState, darkMode } = useData();
 
   const [sortByOption, setSortByOption] = useState("Latest");
 
   const sortedPosts = getSortedPosts(dataState?.posts, sortByOption);
 
   return (
-    <div className="explore">
+    <div className={`explore ${darkMode && "bgDarkmode"}`}>
       <Navbar />
       <div className="explore-content">
         <LeftSideBar />
@@ -28,7 +28,10 @@ const Explore = () => {
             <div>
               <div className="sort-post">
                 <h3>{sortOptions[sortByOption]}</h3>
-                <select onChange={(e) => setSortByOption(e.target.value)}>
+                <select
+                  onChange={(e) => setSortByOption(e.target.value)}
+                  className={`${darkMode && "bgDarkmode"}`}
+                >
                   {Object.keys(sortOptions).map((option) => (
                     <option value={option} key={option}>
                       {option}
@@ -36,15 +39,24 @@ const Explore = () => {
                   ))}
                 </select>
               </div>
-              {sortedPosts?.map((post) => (
-                <div key={post?._id}>
-                  <PostCard post={post} />
-                </div>
-              ))}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {sortedPosts?.map((post) => (
+                  <PostCard post={post} key={post._id} />
+                ))}
+              </div>
             </div>
           )}
         </div>
-        <RightSideBar />
+        <div className="rightSideBar">
+          <RightSideBar />
+        </div>
       </div>
     </div>
   );

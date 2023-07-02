@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { useAuth } from "./authContext";
 import { dataReducer } from "../reducers/dataReducer";
 import axios from "axios";
@@ -8,6 +14,9 @@ const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const { authState } = useAuth();
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark" ? true : false
+  );
 
   const initialState = {
     users: [],
@@ -36,6 +45,8 @@ export const DataProvider = ({ children }) => {
     try {
       dataDispatch({ type: "POSTS_LOADING", payload: true });
       const { data, status } = await axios.get("/api/posts");
+      console.log("Home data", data);
+      console.log(status);
       if (status === 200) {
         dataDispatch({ type: "SET_ALL_POSTS", payload: data?.posts });
         dataDispatch({ type: "POSTS_LOADING", payload: false });
@@ -67,10 +78,16 @@ export const DataProvider = ({ children }) => {
       getAllPosts();
       getAllBookmarks();
     }
-  }, [authState.token]);
+  }, [authState?.token]);
+
+  useEffect(() => {
+    localStorage.setItem("theme", `${darkMode ? "dark" : "light"}`);
+  }, [darkMode]);
 
   return (
-    <DataContext.Provider value={{ dataState, dataDispatch }}>
+    <DataContext.Provider
+      value={{ dataState, dataDispatch, darkMode, setDarkMode }}
+    >
       {children}
     </DataContext.Provider>
   );

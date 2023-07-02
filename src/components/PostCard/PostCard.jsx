@@ -1,30 +1,37 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import "../PostCard/PostCard.css";
+import { toast } from "react-toastify";
+import { likePostHandler } from "../../utils/likePostHandler";
+import { dislikePostHandler } from "../../utils/dislikePostHandler";
+import { removeFromBookmarkPostHandler } from "../../utils/removeFromBookmarkHandler";
+import { addToBookmarkPostHandler } from "../../utils/bookmarkPostHandler";
+import { useLocation, useNavigate } from "react-router-dom";
+import Comment from "../Comment/Comment";
+import { deletePostHandler } from "../../utils/deletePostHandler";
+import PostModal from "../PostModal/PostModal";
+import Linkify from "react-linkify";
+import { contentLink } from "../../utils/contentLink";
+import { getPostDate } from "../../utils/getPostData";
+import { isFollowed } from "../../utils/isFollowed";
+import { followUserHandler } from "../../utils/followUserHandler";
+import { unfollowUserHandler } from "../../utils/unfollowUserHandler";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useAuth } from "../../contexts/authContext";
 import { useData } from "../../contexts/dataContext";
-import { useState } from "react";
-import { getPostDate } from "../../utils/getPostData";
-import { bookmarkPostHandler } from "../../backend/controllers/UserController";
-import { toast } from "react-toastify";
-import {
-  dislikePostHandler,
-  likePostHandler,
-} from "../../backend/controllers/PostController";
-import PostModal from "../PostModal/PostModal";
-import Comment from "../Comment/Comment";
 
 export const PostCard = ({ post }) => {
   const { _id, content, mediaURL, likes, comments, username, createdAt } = post;
 
-  const { dataState, dataDispatch } = useData();
+  const { dataState, dataDispatch, darkMode } = useData();
   const { authState } = useAuth();
 
   const navigate = useNavigate();
 
-  const { pathname } = useLocation();
-
   const [showCommentSection, setShowCommentSection] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
+  const domNode = useOutsideClick(() => setShowOptions(false));
 
   const editClickHandler = () => {
     setShowOptions(false);
@@ -32,7 +39,14 @@ export const PostCard = ({ post }) => {
   };
 
   const deleteClickHandler = () => {
-    // deletePostHsandler(authState?.token,_id,dataDispatch);
+    deletePostHandler(authState?.token, _id, dataDispatch);
+    if (pathname === `/post/${_id}`) {
+      setTimeout(() => {
+        navigate("/");
+        window.scroll({ top: 0, behavior: "smooth" });
+      }, 2000);
+    }
+    setShowOptions((prev) => !prev);
   };
 
   const isliked = () =>
@@ -42,13 +56,45 @@ export const PostCard = ({ post }) => {
   const isBookmarked = () =>
     dataState?.bookmarks?.filter((postId) => postId === _id)?.length !== 0;
 
-  const copyLinkHandler = () => {
-    navigator.clipboard.writeText(`https://tech-social.vercel.app/post/${_id}`);
-    toast.success("Link Copied. Start sharing!");
+  const bookmarkClickHandler = () => {
+    if (isBookmarked()) {
+      removeFromBookmarkPostHandler(authState?.token, _id, dataDispatch);
+      toast.success("Removed from Bookmarks");
+    } else {
+      addToBookmarkPostHandler(authState?.token, _id, dataDispatch);
+      toast.success("Added to Bookmarks");
+    }
   };
 
+  // const copyLinkHandler = () => {
+  //   navigator.clipboard.writeText(`https://tech-social.vercel.app/post/${_id}`);
+  //   toast.success("Link Copied. Start sharing!");
+  // };
+
+  const shareHandler = async () => {
+    try {
+      await navigator.share({
+        title: "tech-social",
+        text: "Check out this post",
+        url: `https://tech-social.vercel.app/post/${_id}`,
+      });
+    } catch (e) {
+      console.error(e);
+      toast.error("Something went wrong. Try again!");
+    }
+  };
+
+  const { pathname } = useLocation();
+
+  const userData = dataState?.users?.find(
+    (user) => user?.username === username
+  );
+
   return (
-    <div key={_id} className="postcard-main">
+    <div
+      key={_id}
+      className={`postcard-main ${darkMode && "bgSecondaryDarkMode"}`}
+    >
       <div className="postcard-header">
         <div
           className="postcard-header-left"
@@ -56,17 +102,17 @@ export const PostCard = ({ post }) => {
         >
           <img
             src={
-              dataState?.token?.users?.find(
-                (user) => user.username === username
-              )?.profileAvatar
+              dataState?.users?.find((user) => user.username === username)
+                ?.profileAvatar ||
+              `https://res.cloudinary.com/dqlasoiaw/image/upload/v1686688962/tech-social/blank-profile-picture-973460_1280_d1qnjd.png`
             }
-            alt="Avatar"
+            alt="avatar"
           />
           <div>
             <h4>{`${
               dataState?.users?.find((user) => user.username === username)
                 ?.firstName
-            }${
+            } ${
               dataState?.users?.find((user) => user.username === username)
                 ?.lastName
             }`}</h4>
@@ -77,21 +123,72 @@ export const PostCard = ({ post }) => {
             </small>
           </div>
         </div>
-        {username === authState?.user?.username && (
-          <div className="edit-delete-icon">
-            <i
-              className="fa-solid fa-ellipsis"
-              onClick={() => setShowOptions(!showOptions)}
-            ></i>
-            {showOptions && (
-              <div className="edit-delete-post-modal">
-                <div onClick={editClickHandler}>Edit</div>
+        <div className="edit-delete-icon" ref={domNode}>
+          <i
+            className="fa-solid fa-ellipsis"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowOptions(!showOptions);
+            }}
+          ></i>
+          {showOptions &&
+            (username === authState?.user?.username ? (
+              <div
+                className={`edit-delete-post-modal ${darkMode && "bgDarkmode"}`}
+              >
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    editClickHandler();
+                  }}
+                >
+                  Edit
+                </div>
                 <hr />
-                <div onClick={deleteClickHandler}>Delete</div>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteClickHandler();
+                  }}
+                >
+                  Delete
+                </div>
               </div>
-            )}
-          </div>
-        )}
+            ) : (
+              <div
+                className={`edit-delete-post-modal ${darkMode && "bgDarkmode"}`}
+              >
+                <div
+                  onClick={() => {
+                    if (authState?.token) {
+                      if (isFollowed(dataState?.users, userData._id)) {
+                        unfollowUserHandler(
+                          authState?.token,
+                          userData?._id,
+                          dataDispatch
+                        );
+                        setShowOptions(false);
+                      } else {
+                        followUserHandler(
+                          authState?.token,
+                          userData?._id,
+                          dataDispatch
+                        );
+                        setShowOptions(false);
+                      }
+                    } else {
+                      toast.error("Please login to follow");
+                      navigate("/login");
+                    }
+                  }}
+                >
+                  {isFollowed(dataState?.users, userData?._id)
+                    ? "Following"
+                    : "Follow"}
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
       <div
         className="postcard-content-main"
@@ -99,10 +196,9 @@ export const PostCard = ({ post }) => {
           navigate(`/post/${_id}`);
         }}
       >
-        {content}
-        {/* <Linkify className="content" componentDecorator={contentLink}>
+        <Linkify className="content" componentDecorator={contentLink}>
           {content}
-        </Linkify> */}
+        </Linkify>
         {mediaURL && mediaURL.split("/")[4] === "image" ? (
           <img
             src={mediaURL}
@@ -113,10 +209,10 @@ export const PostCard = ({ post }) => {
           mediaURL && (
             <video
               controls
+              onClick={(e) => e.stopPropagation()}
+              src={mediaURL}
               style={{ width: "100%", height: "auto", objectFit: "contain" }}
-            >
-              <source src={mediaURL} />
-            </video>
+            ></video>
           )
         )}
       </div>
@@ -157,7 +253,7 @@ export const PostCard = ({ post }) => {
               if (!authState?.token) {
                 toast.error("Please login to proceed!");
               } else {
-                bookmarkPostHandler();
+                bookmarkClickHandler();
               }
             }}
           ></i>
@@ -165,7 +261,7 @@ export const PostCard = ({ post }) => {
         <div>
           <i
             className="fa-regular fa-share-from-square"
-            onClick={copyLinkHandler}
+            onClick={shareHandler}
           ></i>
         </div>
       </div>

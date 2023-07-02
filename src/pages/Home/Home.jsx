@@ -8,11 +8,12 @@ import { getSortedPosts, sortOptions } from "../../utils/sortPosts";
 import { ClipLoader } from "react-spinners";
 import { PostCard } from "../../components/PostCard/PostCard";
 import PostForm from "../../components/PostForm/PostForm";
+import RightSideBar from "../../components/RightSideBar/RightSideBar";
 
 export const Home = () => {
   document.title = "Insta-Tweets | Home";
 
-  const { dataState } = useData();
+  const { dataState, darkMode } = useData();
   const { authState } = useAuth();
 
   const loggedInUser = dataState?.users?.find(
@@ -35,21 +36,24 @@ export const Home = () => {
   console.log(sortedPosts);
 
   return (
-    <div className="home">
+    <div className={`home ${darkMode && "bgDarkmode"}`}>
       <Navbar />
       <div className="home-content">
         <LeftSideBar />
-        <div className="home-main">
+        <div className={`home-main ${darkMode && "bgDarkmode"}`}>
           <PostForm />
           {dataState?.postsLoading ? (
-            <ClipLoader color="blue" size={60} />
+            <ClipLoader color="var(--primary-dark)" size={60} />
           ) : postsOfFollowed?.length === 0 ? (
-            <h3>No Posts to Display</h3>
+            <h3>No Posts to Display!</h3>
           ) : (
-            <div>
+            <div style={{ width: "100%" }}>
               <div className="sort-post">
                 <h3>{sortOptions[sortByOption]}</h3>
-                <select onChange={(e) => setSortByOption(e.target.value)}>
+                <select
+                  onChange={(e) => setSortByOption(e.target.value)}
+                  className={`${darkMode && "bgDarkmode"}`}
+                >
                   {Object.keys(sortOptions).map((option) => (
                     <option value={option} key={option}>
                       {option}
@@ -57,11 +61,23 @@ export const Home = () => {
                   ))}
                 </select>
               </div>
-              {sortedPosts?.map((post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {sortedPosts?.map((post) => (
+                  <PostCard key={post._id} post={post} />
+                ))}
+              </div>
             </div>
           )}
+        </div>
+        <div className="rightSideBar">
+          <RightSideBar />
         </div>
       </div>
     </div>
