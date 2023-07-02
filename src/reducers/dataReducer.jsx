@@ -23,6 +23,13 @@ export const dataReducer = (state, action) => {
       return { ...state, posts: action.payload };
     case "EDIT_POST":
       return { ...state, posts: action.payload };
+    case "EDIT_USER":
+      return {
+        ...state,
+        users: state?.users?.map((user) =>
+          action.payload?._id === user._id ? { ...action.payload } : user
+        ),
+      };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../PostDetails/PostDetails.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
