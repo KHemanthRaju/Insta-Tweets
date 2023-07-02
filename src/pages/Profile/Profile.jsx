@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Profile/Profile.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -6,8 +6,8 @@ import { isFollowed } from "../../utils/isFollowed";
 import { unfollowUserHandler } from "../../utils/unfollowUserHandler";
 import { followUserHandler } from "../../utils/followUserHandler";
 import { toast } from "react-toastify";
-import FollowModal from "../../components/FollowModal/followModal";
-import EditProfileModal from "../../components/EditProfileModal/editProfileModal";
+import FollowModal from "../../components/FollowModal/FollowModal";
+import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import { getSortedPosts } from "../../utils/sortPosts";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useAuth } from "../../contexts/authContext";
