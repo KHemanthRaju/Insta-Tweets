@@ -96,7 +96,7 @@
   cursor: pointer;
   font-size: 16px;
   padding: 0.5rem;
-  /* background-color: var(--lightgrey-color); */
+  background-color: var(--lightgrey-color);
   border-radius: 50%;
   position: absolute;
   border: none;
