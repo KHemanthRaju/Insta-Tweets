@@ -388,7 +388,7 @@ export const posts = [
         text: "Yeah definitely",
       },
     ],
-    username: "schakraborty",
+    username: "hemanthRaju",
     createdAt: "2023-06-15T10:55:06+05:30",
     updatedAt: formatDate(),
   },
@@ -442,7 +442,7 @@ export const posts = [
       dislikedBy: [],
     },
     comments: [],
-    username: "schakraborty",
+    username: "hemanthRaju",
     createdAt: "2022-08-31T10:15:12+05:30",
     updatedAt: formatDate(),
   },
@@ -515,7 +515,7 @@ export const posts = [
         text: "The UI is very beautiful with smooth, responsive and great colour combination. The user experience is amazing 🤩 with working backend.",
       },
     ],
-    username: "schakraborty",
+    username: "hemanthRaju",
     createdAt: "2023-05-21T10:55:06+05:30",
     updatedAt: formatDate(),
   },
@@ -533,7 +533,7 @@ export const posts = [
     comments: [
       {
         _id: "fhy5d8_jr2K_17h8_jAk6BW",
-        username: "schakraborty",
+        username: "hemanthRaju",
         text: "👋",
       },
     ],
@@ -589,7 +589,7 @@ export const posts = [
     comments: [
       {
         _id: "bcdskf_78n8_9kf8_dsb7Dk",
-        username: "schakraborty",
+        username: "hemanthRaju",
         text: "axios",
       },
     ],

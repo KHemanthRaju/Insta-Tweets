@@ -13,7 +13,7 @@ export const users = [
     email: "cool@gmail.com",
     password: "khr@123",
     bio: "Aspiring Frontend Developer",
-    website: "https://sudiptachakraborty.netlify.app/",
+    website: "https://khr-portfolio.netlify.app/",
     profileAvatar:
       "https://res.cloudinary.com/dfp7zvyfo/image/upload/v1687605250/K_Hemanth_Raju_1_xghrc5.jpg",
     createdAt: "2022-08-31T10:15:12+05:30",
