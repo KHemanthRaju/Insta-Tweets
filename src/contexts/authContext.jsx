@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, initialAuth);
 
   const userLogin = async (loginData) => {
+    console.log("Login Data", loginData);
     try {
       const { status, data } = await axios.post(`/api/auth/login`, loginData);
       if (status === 200) {

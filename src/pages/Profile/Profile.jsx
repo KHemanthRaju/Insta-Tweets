@@ -19,13 +19,14 @@ import RightSideBar from "../../components/RightSideBar/RightSideBar";
 
 const Profile = () => {
   const { username } = useParams();
+  console.log("Username in Profile", username);
   const { authState } = useAuth();
   const { dataState, dataDispatch, darkMode } = useData();
 
   const [profileData, setProfileData] = useState({});
   const [editProfileModal, setEditProfileModal] = useState(false);
-
-  document.title = `tech-social | ${
+  console.log(profileData);
+  document.title = `Insta-Tweets | ${
     profileData?.firstName + " " + profileData?.lastName
   }`;
 
@@ -40,8 +41,10 @@ const Profile = () => {
 
   const getUserDetails = async () => {
     try {
+      console.log("Entered");
       setUsersLoading(true);
-      const { data, status } = await axios.get(`/api/users/${username}`);
+      console.log("Exited");
+      const { data, status } = await axios.get(`api/users/${username}`);
       console.log("User data", data);
       console.log("User status", status);
       if (status === 200) {
@@ -56,6 +59,7 @@ const Profile = () => {
   const userPosts = dataState?.posts?.filter(
     (post) => post?.username === profileData?.username
   );
+  console.log("User posts", userPosts);
 
   useEffect(() => {
     getUserDetails();

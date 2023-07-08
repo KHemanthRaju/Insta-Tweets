@@ -20,9 +20,10 @@ export const getAllUsersHandler = function () {
  * */
 
 export const getUserHandler = function (schema, request) {
-  const userId = request.params.userId;
+  const username = request.params.username;
+  console.log("Get User Handler", username);
   try {
-    const user = schema.users.findBy({ _id: userId }).attrs;
+    const user = schema.users.findBy({ username: username }).attrs;
     return new Response(200, {}, { user });
   } catch (error) {
     return new Response(
