@@ -4,8 +4,9 @@ import Picker from "emoji-picker-react";
 import { toast } from "react-toastify";
 import { uploadMedia } from "../../utils/uploadMedia";
 import { createPostHandler } from "../../utils/createPostHandler";
-import { useData } from "../../contexts/dataContext";
 import { editPostHandler } from "../../utils/editPostHandler";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useData } from "../../contexts/dataContext";
 import { useAuth } from "../../contexts/authContext";
 
 const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
@@ -14,7 +15,13 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const { authState } = useAuth();
-  const { dataDispatch } = useData();
+  const { dataDispatch, darkMode } = useData();
+
+  const domNode = useOutsideClick(() => setShowEmojiPicker(false));
+
+  const postModalNode = useOutsideClick(() =>
+    post ? setShowEditModal(false) : setShowCreatePostModal(false)
+  );
 
   const imageSelectHandler = () => {
     const input = document.createElement("input");
@@ -29,22 +36,24 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
     input.click();
   };
 
-  // const videoSelectHandler = () => {
-  //   const input = document.createElement("input");
-  //   input.type = "file";
-  //   input.accept = "video/*";
-  //   input.onchange = (e) => {
-  //     const file = e.target.files[0];
-  //     Math.round(file.size / 7168000) > 1
-  //       ? toast.error("File size should not be more than 7Mb")
-  //       : setMedia(file);
-  //   };
-  //   input.click();
-  // };
+  const videoSelectHandler = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "video/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      Math.round(file.size / 7168000) > 1
+        ? toast.error("File size should not be more than 7Mb")
+        : setMedia(file);
+    };
+    input.click();
+  };
 
   const emojiClickHandler = (emojiObj) => {
     const emoji = emojiObj.emoji;
-    const updatedContent = updatedPost?.content + emoji;
+    const updatedContent = updatedPost?.content
+      ? updatedPost?.content + emoji
+      : emoji;
     setUpdatedPost((prev) => ({ ...prev, content: updatedContent }));
     setShowEmojiPicker(false);
   };
@@ -70,9 +79,8 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
             dataDispatch
           );
         }
-        toast.success("Edited post successfully!");
       } catch (e) {
-        toast.error("Something went wrong, try again!");
+        console.error(e);
       } finally {
         setUpdatedPost({});
         setMedia(null);
@@ -80,15 +88,18 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
       }
     } else {
       try {
-        const response = await uploadMedia(media);
+        const response = media && (await uploadMedia(media));
         createPostHandler(
-          { content: updatedPost?.content, mediaURL: response.url },
+          {
+            content: updatedPost?.content,
+            mediaURL: response ? response?.url : "",
+            comments: [],
+          },
           authState?.token,
           dataDispatch
         );
-        toast.success("Added new post successfully!");
       } catch (e) {
-        toast.error("Something went wrong, try again!");
+        console.error(e);
       } finally {
         setUpdatedPost({});
         setMedia(null);
@@ -99,7 +110,10 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
 
   return (
     <div className="edit-post-modal-container">
-      <div className="edit-post-modal">
+      <div
+        className={`edit-post-modal ${darkMode && "bgDarkmode"}`}
+        ref={postModalNode}
+      >
         <div className="edit-post-modal-header">
           {post ? <h1>Edit Post</h1> : <h1>Create Post</h1>}
           <i
@@ -110,6 +124,7 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
           ></i>
         </div>
         <textarea
+          className={`${darkMode && "bgDarkmode"}`}
           value={updatedPost?.content}
           onChange={(e) =>
             setUpdatedPost((prev) => ({
@@ -129,11 +144,11 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
             ) : updatedPost?.mediaURL?.split("/")[4] === "video" ||
               media?.type?.split("/")[0] === "video" ? (
               <video alt="Post-video">
-                <source
-                  src={
-                    media ? URL.createObjectURL(media) : updatedPost?.mediaURL
-                  }
-                />
+                {media ? (
+                  <source src={URL.createObjectURL(media)} />
+                ) : (
+                  <source src={updatedPost?.mediaURL} />
+                )}
               </video>
             ) : null}
             <button
@@ -150,24 +165,49 @@ const PostModal = ({ post, setShowEditModal, setShowCreatePostModal }) => {
           <></>
         )}
         <div className="edit-post-modal-buttons">
-          <div>
-            <i className="fa-regular fa-image" onClick={imageSelectHandler}></i>
-            {/* <i
-              className="fa-regular fa-file-video"
-              onClick={videoSelectHandler}
-            ></i> */}
-            <i
-              className="fa-regular fa-face-smile"
-              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            ></i>
-            {showEmojiPicker && (
-              <div className="edit-emoji-picker">
-                <Picker onEmojiClick={emojiClickHandler} />
-              </div>
-            )}
+          <div className="edit-post-modal-icons">
+            <div>
+              <i
+                className="fa-regular fa-image"
+                onClick={imageSelectHandler}
+              ></i>
+            </div>
+            <div>
+              <i
+                className="fa-regular fa-file-video"
+                onClick={videoSelectHandler}
+              ></i>
+            </div>
+            <div ref={domNode}>
+              <i
+                className="fa-regular fa-face-smile"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              ></i>
+              {showEmojiPicker && (
+                <div
+                  className="edit-emoji-picker"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Picker
+                    onEmojiClick={emojiClickHandler}
+                    width={300}
+                    height={450}
+                    theme={darkMode ? "dark" : "light"}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <button
-            onClick={buttonClickHandler}
+            onClick={() => {
+              toast.promise(buttonClickHandler, {
+                pending: post ? "Editing your post" : "Creating your post",
+                success: post
+                  ? "Edited your post successfully!"
+                  : "Added new post successfully!",
+                error: "Something went wrong, try again!",
+              });
+            }}
             disabled={isPostDisabled}
             className={
               isPostDisabled ? "modal-button disabled" : "modal-button"

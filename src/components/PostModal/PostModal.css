@@ -42,6 +42,7 @@
   width: calc(100% - 20px);
   padding: 0.5rem;
   margin-bottom: 0.5rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .edit-post-modal .selected-image-container {
@@ -85,12 +86,18 @@
   padding-right: 1rem;
 }
 
+.edit-post-modal-buttons .edit-post-modal-icons {
+  display: flex;
+  align-items: center;
+}
+
 .edit-post-modal-buttons .modal-button {
   background-color: var(--primary-color);
   color: var(--white-color);
   border: none;
-  padding: 10px;
   cursor: pointer;
+  padding: 10px 25px;
+  font-family: "Poppins", sans-serif;
 }
 
 .edit-post-modal-buttons .modal-button:hover {
@@ -102,6 +109,8 @@
   background-color: transparent;
   cursor: not-allowed;
   color: var(--primary-dark);
+  font-family: "Poppins", sans-serif;
+  padding: 8px 25px;
 }
 
 .edit-post-modal-buttons .disabled:hover {
@@ -110,10 +119,11 @@
 
 .edit-emoji-picker {
   position: absolute;
-  display: flex;
-  align-items: center;
   bottom: 0;
-  right: auto;
-  height: 300px;
-  width: 25em;
+}
+
+@media (max-width: 600px) {
+  .edit-post-modal-container .edit-post-modal {
+    max-width: 18rem;
+  }
 }

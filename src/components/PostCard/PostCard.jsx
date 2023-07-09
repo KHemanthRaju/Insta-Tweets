@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "../PostCard/PostCard.css";
+import "../../App.css";
 import { toast } from "react-toastify";
 import { likePostHandler } from "../../utils/likePostHandler";
 import { dislikePostHandler } from "../../utils/dislikePostHandler";
 import { removeFromBookmarkPostHandler } from "../../utils/removeFromBookmarkHandler";
 import { addToBookmarkPostHandler } from "../../utils/bookmarkPostHandler";
 import { useLocation, useNavigate } from "react-router-dom";
-import Comment from "../Comment/Comment";
+// import Comment from "../Comment/Comment";
 import { deletePostHandler } from "../../utils/deletePostHandler";
 import PostModal from "../PostModal/PostModal";
 import Linkify from "react-linkify";
@@ -20,6 +21,7 @@ import { useAuth } from "../../contexts/authContext";
 import { useData } from "../../contexts/dataContext";
 
 export const PostCard = ({ post }) => {
+  console.log("Posts", post);
   const { _id, content, mediaURL, likes, comments, username, createdAt } = post;
 
   const { dataState, dataDispatch, darkMode } = useData();
@@ -71,18 +73,18 @@ export const PostCard = ({ post }) => {
   //   toast.success("Link Copied. Start sharing!");
   // };
 
-  const shareHandler = async () => {
-    try {
-      await navigator.share({
-        title: "tech-social",
-        text: "Check out this post",
-        url: `https://tech-social.vercel.app/post/${_id}`,
-      });
-    } catch (e) {
-      console.error(e);
-      toast.error("Something went wrong. Try again!");
-    }
-  };
+  // const shareHandler = async () => {
+  //   try {
+  //     await navigator.share({
+  //       title: "tech-social",
+  //       text: "Check out this post",
+  //       url: `https://tech-social.vercel.app/post/${_id}`,
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //     toast.error("Something went wrong. Try again!");
+  //   }
+  // };
 
   const { pathname } = useLocation();
 
@@ -258,14 +260,14 @@ export const PostCard = ({ post }) => {
             }}
           ></i>
         </div>
-        <div>
+        {/* <div>
           <i
             className="fa-regular fa-share-from-square"
             onClick={shareHandler}
           ></i>
-        </div>
+        </div> */}
       </div>
-      {showCommentSection && <Comment post={post} />}
+      {/* {showCommentSection && <Comment post={post} />} */}
 
       {showEditModal && (
         <PostModal post={post} setShowEditModal={setShowEditModal} />

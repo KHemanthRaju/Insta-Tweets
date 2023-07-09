@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import "../PostForm/PostForm.css";
+import React, { useContext, useState } from "react";
+import "./postForm.css";
+import { AuthContext } from "../../contexts/authContext";
+import { DataContext } from "../../contexts/dataContext";
 import { useNavigate } from "react-router-dom";
 import Picker from "emoji-picker-react";
 import { toast } from "react-toastify";
 import { uploadMedia } from "../../utils/uploadMedia";
 import { createPostHandler } from "../../utils/createPostHandler";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { useAuth } from "../../contexts/authContext";
-import { useData } from "../../contexts/dataContext";
 
 const PostForm = () => {
-  const { authState } = useAuth();
-  const { dataState, dataDispatch, darkMode } = useData();
+  const { authState } = useContext(AuthContext);
+  const { dataState, dataDispatch, darkMode } = useContext(DataContext);
 
   const navigate = useNavigate();
 
@@ -21,31 +21,31 @@ const PostForm = () => {
 
   const domNode = useOutsideClick(() => setShowEmojiPicker(false));
 
-  // const imageSelectHandler = () => {
-  //   const input = document.createElement("input");
-  //   input.type = "file";
-  //   input.accept = "image/*";
-  //   input.onchange = (e) => {
-  //     const file = e.target.files[0];
-  //     Math.round(file.size / 1024000) > 1
-  //       ? toast.error("File size should not be more than 1Mb")
-  //       : setMedia(file);
-  //   };
-  //   input.click();
-  // };
+  const imageSelectHandler = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      Math.round(file.size / 1024000) > 1
+        ? toast.error("File size should not be more than 1Mb")
+        : setMedia(file);
+    };
+    input.click();
+  };
 
-  // const videoSelectHandler = () => {
-  //   const input = document.createElement("input");
-  //   input.type = "file";
-  //   input.accept = "video/*";
-  //   input.onchange = (e) => {
-  //     const file = e.target.files[0];
-  //     Math.round(file.size / 7168000) > 1
-  //       ? toast.error("File size should not be more than 7Mb")
-  //       : setMedia(file);
-  //   };
-  //   input.click();
-  // };
+  const videoSelectHandler = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "video/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      Math.round(file.size / 7168000) > 1
+        ? toast.error("File size should not be more than 7Mb")
+        : setMedia(file);
+    };
+    input.click();
+  };
 
   const emojiClickHandler = (emojiObj) => {
     const emoji = emojiObj.emoji;
@@ -57,17 +57,19 @@ const PostForm = () => {
   const isPostDisabled = postContent.trim() === "" && !media;
 
   const postClickHandler = async () => {
-    // toast.warn("Creating a new Post...");
     try {
-      const response = await uploadMedia(media);
+      const response = media && (await uploadMedia(media));
       createPostHandler(
-        { content: postContent, mediaURL: response.url },
+        {
+          content: postContent,
+          mediaURL: response ? response?.url : "",
+          comments: [],
+        },
         authState?.token,
         dataDispatch
       );
-      toast.success("Added new post successfully!");
     } catch (e) {
-      toast.error("Something went wrong, try again!");
+      console.error(e);
     } finally {
       setPostContent("");
       setMedia(null);
@@ -112,15 +114,15 @@ const PostForm = () => {
       )}
       <div className="post-form-button-container">
         <div className="post-form-icons">
-          {/* <div>
+          <div>
             <i className="fa-regular fa-image" onClick={imageSelectHandler}></i>
-          </div> */}
-          {/* <div>
+          </div>
+          <div>
             <i
               className="fa-regular fa-file-video"
               onClick={videoSelectHandler}
             ></i>
-          </div> */}
+          </div>
           <div ref={domNode}>
             <i
               className="fa-regular fa-face-smile"
@@ -135,13 +137,20 @@ const PostForm = () => {
                   onEmojiClick={emojiClickHandler}
                   width={300}
                   height={450}
+                  theme={darkMode ? "dark" : "light"}
                 />
               </div>
             )}
           </div>
         </div>
         <button
-          onClick={postClickHandler}
+          onClick={() => {
+            toast.promise(postClickHandler, {
+              pending: "Creating your post...",
+              success: "Added new post successfully!",
+              error: "Something went wrong, try again!",
+            });
+          }}
           disabled={isPostDisabled}
           className={isPostDisabled ? "post-button disabled" : "post-button"}
         >
