@@ -39,29 +39,30 @@ const Profile = () => {
 
   const [usersLoading, setUsersLoading] = useState(false);
 
-  const getUserDetails = async () => {
-    try {
-      console.log("Entered");
-      setUsersLoading(true);
-      console.log("Exited");
-      const { data, status } = await axios.get(`api/users/${username}`);
-      console.log("User data", data);
-      console.log("User status", status);
-      if (status === 200) {
-        setProfileData(data?.user);
-        setUsersLoading(false);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const userPosts = dataState?.posts?.filter(
     (post) => post?.username === profileData?.username
   );
   console.log("User posts", userPosts);
+  console.log("Profile Data", profileData);
 
   useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        console.log("Entered");
+        setUsersLoading(true);
+        console.log("Exited");
+        const { data, status } = await axios.get(`/api/users/hemanthRaju`);
+        // const { data, status } = await axios.get(`api/users/${username}`);
+        console.log("User data", data);
+        console.log("User status", status);
+        if (status === 200) {
+          setProfileData(data?.user);
+          setUsersLoading(false);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
     getUserDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, dataState?.users]);
