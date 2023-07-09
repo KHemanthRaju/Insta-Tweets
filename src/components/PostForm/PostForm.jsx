@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
-import "./postForm.css";
-import { AuthContext } from "../../contexts/authContext";
-import { DataContext } from "../../contexts/dataContext";
+import React, { useState } from "react";
+import "../PostForm/PostForm.css";
 import { useNavigate } from "react-router-dom";
 import Picker from "emoji-picker-react";
 import { toast } from "react-toastify";
 import { uploadMedia } from "../../utils/uploadMedia";
 import { createPostHandler } from "../../utils/createPostHandler";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useAuth } from "../../contexts/authContext";
+import { useData } from "../../contexts/dataContext";
 
 const PostForm = () => {
-  const { authState } = useContext(AuthContext);
-  const { dataState, dataDispatch, darkMode } = useContext(DataContext);
+  const { authState } = useAuth();
+  const { dataState, dataDispatch, darkMode } = useData();
 
   const navigate = useNavigate();
 
