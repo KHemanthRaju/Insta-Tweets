@@ -1,5 +1,5 @@
 .postcard-main {
-  width: 500px;
+  width: 75%;
   margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -88,5 +88,12 @@ a {
 .postcard-main .edit-delete-icon .edit-delete-post-modal div:hover {
   background-color: var(--lightgrey-color);
   cursor: pointer;
+  color: var(--primary-dark);
   border-radius: 5px;
+}
+
+.postcard-content-main .postcard-content-img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
 }

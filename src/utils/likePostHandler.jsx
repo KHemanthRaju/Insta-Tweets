@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 export const likePostHandler = async (encodedToken, postId, dataDispatch) => {
   try {
+    console.log("Like Handler:", postId);
     const { data, status } = await axios.post(
       `/api/posts/like/${postId}`,
       {},

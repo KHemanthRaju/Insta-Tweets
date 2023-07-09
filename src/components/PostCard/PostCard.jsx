@@ -59,10 +59,14 @@ export const PostCard = ({ post }) => {
     dataState?.bookmarks?.filter((postId) => postId === _id)?.length !== 0;
 
   const bookmarkClickHandler = () => {
+    console.log("Inside Book Handler");
     if (isBookmarked()) {
+      console.log("IsBookmarked");
       removeFromBookmarkPostHandler(authState?.token, _id, dataDispatch);
       toast.success("Removed from Bookmarks");
     } else {
+      console.log("IS not bookmarked");
+      console.log(authState?.token);
       addToBookmarkPostHandler(authState?.token, _id, dataDispatch);
       toast.success("Added to Bookmarks");
     }

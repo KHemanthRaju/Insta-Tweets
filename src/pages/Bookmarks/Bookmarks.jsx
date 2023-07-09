@@ -7,13 +7,16 @@ import { PostCard } from "../../components/PostCard/PostCard";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 
 const Bookmarks = () => {
-  document.title = "tech-social | Bookmarks";
+  document.title = "insta-tweets | Bookmarks";
 
   const { dataState, darkMode } = useData();
 
-  const getBookmarkPosts = (postId) =>
-    dataState?.posts?.filter((post) => post._id === postId)[0];
-
+  const getBookmarkPosts = (postId) => {
+    console.log("Post Id", postId._id);
+    console.log("Type of PostId", typeof postId);
+    return dataState?.posts?.filter((post) => post._id === postId._id)[0];
+  };
+  console.log("BookMark Posts", getBookmarkPosts("rkk8hk_Ku98_b980_bvctyu"));
   return (
     <div className={`bookmarks ${darkMode && "bgDarkmode"}`}>
       <Navbar />
@@ -23,8 +26,8 @@ const Bookmarks = () => {
           {dataState?.bookmarks?.length === 0 ? (
             <h3>No Bookmarks Yet</h3>
           ) : (
-            dataState?.bookmarks.map((post) => (
-              <PostCard key={post._id} post={getBookmarkPosts(post)} />
+            dataState?.bookmarks.map((postcool) => (
+              <PostCard key={postcool._id} post={getBookmarkPosts(postcool)} />
             ))
           )}
         </div>
