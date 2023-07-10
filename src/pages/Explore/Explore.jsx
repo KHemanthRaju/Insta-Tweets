@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "../Explore/Explore.css";
 import { sortOptions, getSortedPosts } from "../../utils/sortPosts";
 import ClipLoader from "react-spinners/ClipLoader";
