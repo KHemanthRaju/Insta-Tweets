@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../LikedPosts/LikedPosts.css";
 import { useAuth } from "../../contexts/authContext";
 import { useData } from "../../contexts/dataContext";
