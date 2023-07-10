@@ -46,7 +46,7 @@ export const Login = () => {
       <div className={`login ${darkMode && "bgSecondaryDarkMode"}`}>
         <div className="login-logo">
           {/* <img src={logo} alt="logo" /> */}
-          <h2>Insta-social</h2>
+          <h2>Insta-tweets</h2>
         </div>
         <p>Social media for programmers</p>
         <h2>Login</h2>
