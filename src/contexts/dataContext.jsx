@@ -44,8 +44,6 @@ export const DataProvider = ({ children }) => {
     try {
       dataDispatch({ type: "POSTS_LOADING", payload: true });
       const { data, status } = await axios.get("/api/posts");
-      console.log("Home data", data);
-      console.log(status);
       if (status === 200) {
         dataDispatch({ type: "SET_ALL_POSTS", payload: data?.posts });
         dataDispatch({ type: "POSTS_LOADING", payload: false });
@@ -68,6 +66,7 @@ export const DataProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      toast.error(err.response.data.errors[0]);
     }
   };
 
@@ -77,7 +76,8 @@ export const DataProvider = ({ children }) => {
       getAllPosts();
       getAllBookmarks();
     }
-  }, [authState?.token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authState.token]);
 
   useEffect(() => {
     localStorage.setItem("theme", `${darkMode ? "dark" : "light"}`);
