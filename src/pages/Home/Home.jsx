@@ -15,11 +15,11 @@ export const Home = () => {
 
   const { dataState, darkMode } = useData();
   const { authState } = useAuth();
-  // console.log("Data State", dataState.users);
-  // console.log("Auth State", authState?.user?.username);
+
   const loggedInUser = dataState?.users?.find(
-    ({ username }) => username === authState.user.username
+    ({ username }) => username === authState?.user?.username
   );
+
   console.log("Logggedin User", loggedInUser);
 
   const postsOfFollowed = dataState?.posts?.filter(

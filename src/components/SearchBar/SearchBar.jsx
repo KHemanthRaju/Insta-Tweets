@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "../SearchBar/SearchBar.css";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../../contexts/dataContext";
@@ -7,7 +7,7 @@ export const SearchBar = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchedUsers, setSearchedUsers] = useState([]);
 
-  const { dataState } = useData();
+  const { dataState, darkMode } = useData();
 
   const navigate = useNavigate();
 
@@ -32,6 +32,7 @@ export const SearchBar = () => {
       <div className="search-bar">
         <input
           type="text"
+          className={`${darkMode && "bgSecondaryDarkMode"}`}
           placeholder="Search Users"
           value={searchInput}
           onChange={inputChangeHandler}
@@ -78,7 +79,9 @@ export const SearchBar = () => {
           </div>
         ) : (
           searchInput.trim().length > 0 && (
-            <div className="searched-users-container">
+            <div
+              className={`searched-users-container ${darkMode && "bgDarkmode"}`}
+            >
               <p>User not found!</p>
             </div>
           )

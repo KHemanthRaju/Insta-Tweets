@@ -87,7 +87,7 @@ const PostForm = () => {
           src={
             dataState?.users?.find((user) => user._id === authState?.user?._id)
               ?.profileAvatar ||
-            `https://res.cloudinary.com/dqlasoiaw/image/upload/v1686688962/tech-social/blank-profile-picture-973460_1280_d1qnjd.png`
+            `https://res.cloudinary.com/dfp7zvyfo/image/upload/v1687605250/K_Hemanth_Raju_1_xghrc5.jpg`
           }
           alt="profile-pic"
         />

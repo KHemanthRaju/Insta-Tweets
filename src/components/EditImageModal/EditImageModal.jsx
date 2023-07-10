@@ -3,28 +3,29 @@ import "../EditImageModal/EditImageModal.css";
 import { avatarDb } from "../Assets/avatarDb";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useData } from "../../contexts/dataContext";
+import { toast } from "react-toastify";
 
 const EditImageModal = ({ setUpdatedProfileData, setEditImageModal }) => {
   const { darkMode } = useData();
 
-  // const imageSelectHandler = () => {
-  //   const input = document.createElement("input");
-  //   input.type = "file";
-  //   input.accept = "image/*";
-  //   input.onchange = (e) => {
-  //     const file = e.target.files[0];
-  //     if (Math.round(file.size / 1024000) > 1)
-  //       toast.error("File size should not be more than 1Mb");
-  //     else {
-  //       setUpdatedProfileData((prev) => ({
-  //         ...prev,
-  //         profileAvatar: URL.createObjectURL(file),
-  //       }));
-  //       setEditImageModal(false);
-  //     }
-  //   };
-  //   input.click();
-  // };
+  const imageSelectHandler = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (Math.round(file.size / 1024000) > 1)
+        toast.error("File size should not be more than 1Mb");
+      else {
+        setUpdatedProfileData((prev) => ({
+          ...prev,
+          profileAvatar: URL.createObjectURL(file),
+        }));
+        setEditImageModal(false);
+      }
+    };
+    input.click();
+  };
 
   const editImageModalNode = useOutsideClick(() => setEditImageModal(false));
 
@@ -60,9 +61,9 @@ const EditImageModal = ({ setUpdatedProfileData, setEditImageModal }) => {
           ))}
         </div>
         <div className="edit-image-buttons">
-          {/* <button onClick={imageSelectHandler}>
+          <button onClick={imageSelectHandler}>
             <i className="fa-regular fa-image"></i> Browse Profile Image
-          </button> */}
+          </button>
           <button
             onClick={() => {
               setUpdatedProfileData((prev) => ({
