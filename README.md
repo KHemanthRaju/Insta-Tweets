@@ -2,6 +2,10 @@
 
 [insta-tweets](https://insta-tweets-khr.netlify.app/) - A social media application where you can share your thoughts and connect with your friends.
 
+# Demo video
+
+[insta-tweets-demo-video](https://www.loom.com/share/8766646adff24b768262ac2b8291e2e4?sid=8a9ea34c-c371-468a-b29e-b7c62c9d6da6)
+
 ## How to install and run locally?
 
 ```
