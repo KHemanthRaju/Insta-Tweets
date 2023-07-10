@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       authDispatch({ type: "SET_USER", payload: localStorageData?.user });
       authDispatch({ type: "SET_TOKEN", payload: localStorageData?.token });
     }
-  }, []);
+  });
 
   return (
     <AuthContext.Provider

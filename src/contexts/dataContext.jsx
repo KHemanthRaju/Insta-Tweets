@@ -77,7 +77,7 @@ export const DataProvider = ({ children }) => {
       getAllPosts();
       getAllBookmarks();
     }
-  }, [authState.token]);
+  }, [authState?.token]);
 
   useEffect(() => {
     localStorage.setItem("theme", `${darkMode ? "dark" : "light"}`);
