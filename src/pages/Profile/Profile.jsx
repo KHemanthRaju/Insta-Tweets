@@ -48,13 +48,8 @@ const Profile = () => {
   useEffect(() => {
     const getUserDetails = async () => {
       try {
-        console.log("Entered");
         setUsersLoading(true);
-        console.log("Exited");
         const { data, status } = await axios.get(`/api/users/hemanthRaju`);
-        // const { data, status } = await axios.get(`api/users/${username}`);
-        console.log("User data", data);
-        console.log("User status", status);
         if (status === 200) {
           setProfileData(data?.user);
           setUsersLoading(false);
