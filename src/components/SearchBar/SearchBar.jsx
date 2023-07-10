@@ -29,7 +29,7 @@ export const SearchBar = () => {
 
   return (
     <div>
-      <div className="search-bar">
+      <div className={`search-bar ${darkMode && "bgSecondaryDarkMode"}`}>
         <input
           type="text"
           className={`${darkMode && "bgSecondaryDarkMode"}`}
@@ -45,7 +45,9 @@ export const SearchBar = () => {
       </div>
       <div className="search-main-container">
         {searchedUsers.length > 0 && searchInput.trim().length > 0 ? (
-          <div className="searched-users-container">
+          <div
+            className={`searched-users-container ${darkMode && "bgDarkmode"}`}
+          >
             {searchedUsers?.map(
               ({ _id, firstName, lastName, username, profileAvatar }) => {
                 return (
