@@ -435,7 +435,7 @@ export const posts = [
     content:
       "Build a Simple React Login Form using Event Handlers and React Hook",
     mediaURL:
-      "https://res.cloudinary.com/dqlasoiaw/image/upload/v1686808219/tech-social/EDAef5fL7_zkli5s.jpg",
+      "https://res.cloudinary.com/dfp7zvyfo/image/upload/v1688977574/Screenshot_2023-07-10_135512_qnvuim.png",
     likes: {
       likeCount: 6,
       likedBy: [],
@@ -507,7 +507,7 @@ export const posts = [
       {
         _id: "fyjksd_gb3j_37h8_fy7kBW",
         username: "davidkyle",
-        text: "Awesome work Sudipta 🔥",
+        text: "Nice work 🔥",
       },
       {
         _id: "hjThfd_6jfY_49H3_ks5kAt",
