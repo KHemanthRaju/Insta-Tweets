@@ -374,7 +374,7 @@ export const posts = [
   {
     _id: "bkjsdb_689b_HbJ8_nklnF7",
     content:
-      "If you think ChatGPT can replace you, maybe you don't know programming.",
+      "Threads is a new social media platform developed by meta. It seems like competitor for Twitter😎.",
     mediaURL: "",
     likes: {
       likeCount: 4,
@@ -495,9 +495,9 @@ export const posts = [
   {
     _id: "sfgjuk_ftbj_6789_fghuSD",
     content:
-      "Excited to share my first e-commerce website built using ReactJS, mockbee server, vanilla CSS🥳. https://glamour-ecommerce.vercel.app/",
+      "Excited to share my first e-commerce website built using ReactJS, mockbee server, vanilla JS and CSS🥳. https://snapcart.netlify.app/",
     mediaURL:
-      "https://res.cloudinary.com/dqlasoiaw/video/upload/v1686771977/tech-social/Glamour_Ecommerce_-_Google_Chrome_2023-06-08_17-22-56_online-video-cutter.com_uaylnt.mp4",
+      "https://res.cloudinary.com/dfp7zvyfo/video/upload/v1688977925/E-commerce_App_Walkthrough_%EF%B8%8F_rwzydg.mp4",
     likes: {
       likeCount: 25,
       likedBy: [],
@@ -599,9 +599,9 @@ export const posts = [
   },
   {
     _id: "hjgjkf_86j9_jcs3_87dmds",
-    content: "Life of a software engineer: coffee + mac + notepad ❤️",
+    content: "A pic from my holiday trip❤️",
     mediaURL:
-      "https://res.cloudinary.com/dqlasoiaw/image/upload/v1687869845/tech-social/laptop-iphone-notebook-computer-writing-work-screen-apple-coffee-technology-notepad-espresso-macbook-air-devices-multimedia-notes-mockup-personal-computer-electronic-device-computer-hardware-personal-computer-hardware-938794_xiebsm.jpg",
+      "https://res.cloudinary.com/dfp7zvyfo/image/upload/v1687605064/samples/landscapes/beach-boat.jpg",
     likes: {
       likeCount: 45,
       likedBy: [],
@@ -616,7 +616,7 @@ export const posts = [
     _id: "b7nk8m_nb79_8689_ghdfjJ",
     content: "Write your suggested ways to improve API Performance.",
     mediaURL:
-      "https://res.cloudinary.com/dqlasoiaw/image/upload/v1687870563/tech-social/what_20is_20an_20api167511875313774_qdkcan.jpg",
+      "https://res.cloudinary.com/dfp7zvyfo/image/upload/v1688979626/API-pic_el5jnb.png",
     likes: {
       likeCount: 13,
       likedBy: [],
